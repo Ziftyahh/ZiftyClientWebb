@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZiftyClient</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    font-family: Arial, Helvetica, sans-serif;
+    user-select:none;
+}
+
+body{
+    background:url("bg.jpg") center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(8px);
+}
+
+.container{
+    position:relative;
+    text-align:center;
+    z-index:2;
+}
+
+.title{
+    font-size:64px;
+    font-weight:900;
+    color:white;
+    margin-bottom:35px;
+    text-shadow:0 10px 40px rgba(0,0,0,.7);
+    animation:titleIn .9s ease forwards;
+    opacity:0;
+}
+
+.download{
+    padding:24px 80px;
+    font-size:24px;
+    font-weight:800;
+    color:white;
+    border-radius:22px;
+    border:1px solid rgba(255,255,255,0.35);
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(25px);
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.6),
+        inset 0 0 20px rgba(255,255,255,.25);
+    animation:buttonIn 1.1s ease forwards, float 4s ease-in-out infinite;
+    opacity:0;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.download:hover{
+    transform:translateY(-6px) scale(1.05);
+    background:rgba(255,255,255,0.28);
+}
+
+.download:active{
+    transform:scale(.96);
+}
+
+.subtitle{
+    margin-top:18px;
+    color:rgba(255,255,255,0.75);
+    font-size:14px;
+    letter-spacing:.3px;
+}
+
+/* Countdown Overlay */
+.thanks{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-size:38px;
+    font-weight:800;
+    color:white;
+    text-shadow:0 10px 40px black;
+    background:rgba(0,0,0,.6);
+    opacity:0;
+    pointer-events:none;
+    transition:.4s;
+    z-index:999;
+}
+
+.thanks.show{
+    opacity:1;
+}
+
+.small{
+    margin-top:10px;
+    font-size:18px;
+    opacity:.8;
+}
+
+@keyframes titleIn{
+    from{opacity:0; transform:translateY(-40px);}
+    to{opacity:1; transform:none;}
+}
+
+@keyframes buttonIn{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:none;}
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <div class="title">ZiftyClient</div>
+
+    <button class="download" onclick="startDownload()">
+        ⬇ Download
+    </button>
+
+    <div class="subtitle">
+        The best Minecraft client for 1.20.1
+    </div>
+</div>
+
+<div class="thanks" id="thanks">
+    <div id="countText">Wait 3 seconds…</div>
+    <div class="small" id="smallText"></div>
+</div>
+
+<script>
+const FILE = "ZiftyClient 1.20.1.jar";
+
+function startDownload(){
+    const overlay = document.getElementById("thanks");
+    const text = document.getElementById("countText");
+    const small = document.getElementById("smallText");
+
+    overlay.classList.add("show");
+
+    let count = 3;
+    text.innerText = "Wait " + count + " seconds…";
+
+    const timer = setInterval(()=>{
+        count--;
+
+        if(count > 0){
+            text.innerText = count;
+        }else if(count === 0){
+            text.innerText = "Download Ready";
+        }else{
+            clearInterval(timer);
+
+            // Trigger real download
+            const a = document.createElement("a");
+            a.href = FILE;
+            a.download = FILE;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            small.innerText = "Thank you for downloading ZiftyClient ❤️";
+
+            setTimeout(()=>{
+                overlay.classList.remove("show");
+                small.innerText="";
+            },2000);
+        }
+    },1000);
+}
+</script>
+
+</body>
+</html>
