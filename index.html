@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>ZiftyClient</title>
 
-<!-- Favicon -->
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 
@@ -50,9 +49,22 @@ body{
     opacity:0;
 }
 
-.download{
-    padding:24px 80px;
-    font-size:24px;
+.buttons{
+    display:flex;
+    gap:40px;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+.buttonwrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.glass{
+    padding:22px 70px;
+    font-size:22px;
     font-weight:800;
     color:white;
     border-radius:22px;
@@ -68,23 +80,37 @@ body{
     opacity:0;
 }
 
-.download:hover{
+.glass:hover{
     transform:translateY(-6px) scale(1.05);
     background:rgba(255,255,255,0.28);
 }
 
-.download:active{
+.glass:active{
     transform:scale(.96);
 }
 
-.subtitle{
-    margin-top:18px;
-    color:rgba(255,255,255,0.75);
-    font-size:14px;
-    letter-spacing:.3px;
+.launcher{
+    opacity:.4;
+    cursor:not-allowed;
 }
 
-/* Overlay */
+.launcher:hover{
+    transform:none;
+    background:rgba(255,255,255,0.18);
+}
+
+.sub{
+    margin-top:10px;
+    font-size:13px;
+    color:rgba(255,255,255,0.7);
+}
+
+.subtitle{
+    margin-top:22px;
+    color:rgba(255,255,255,0.75);
+    font-size:14px;
+}
+
 .thanks{
     position:fixed;
     inset:0;
@@ -137,9 +163,20 @@ body{
 <div class="container">
     <div class="title">ZiftyClient</div>
 
-    <button class="download" onclick="startDownload()">
-        ⬇ Download
-    </button>
+    <div class="buttons">
+
+        <!-- DOWNLOAD -->
+        <div class="buttonwrap">
+            <button class="glass" onclick="startDownload()">⬇ Download</button>
+        </div>
+
+        <!-- LAUNCHER -->
+        <div class="buttonwrap">
+            <div class="glass launcher">🚀 Launcher</div>
+            <div class="sub">Coming Soon</div>
+        </div>
+
+    </div>
 
     <div class="subtitle">
         The best Minecraft client for 1.20.1
